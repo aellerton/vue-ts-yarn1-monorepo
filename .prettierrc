@@ -1,0 +1,7 @@
+{
+  "comment": "this repo doesn't use prettier, but some IDEs read this file",
+  "semi": false,
+  "trailingComma": "none",
+  "bracketSpacing": true
+}
+

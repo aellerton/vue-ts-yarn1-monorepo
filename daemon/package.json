@@ -1,0 +1,22 @@
+{
+  "name": "daemon",
+  "version": "0.1.0",
+  "license": "BSD-2-Clause",
+  "scripts": {
+    "build": "webpack --mode development",
+    "dist": "webpack --mode production",
+    "serve": "concurrently --names build,serve --kill-others-on-fail \"yarn build --watch\" \"node-dev ../dist/bin/daemon.js\""
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "foolib": "0.1.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.8",
+    "@types/express": "^4.17.9",
+    "webpack": "^5.8.0",
+    "webpack-cli": "^4.2.0",
+    "webpack-node-externals": "^2.5.2"
+  }
+}

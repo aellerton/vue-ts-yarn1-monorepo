@@ -1,0 +1,23 @@
+{
+  "private": true,
+  "license": "BSD-2-Clause",
+  "scripts": {
+    "web": "yarn workspace webapp serve",
+    "api": "concurrently --names build,serve --kill-others-on-fail \"yarn build-api --watch\" \"yarn serve-api\"",
+    "packages": "tsc --build packages/*",
+    "build-api": "yarn workspace daemon build",
+    "DEL-build-foolib": "yarn workspace foolib build",
+    "DEL-build-packages": "tsc --build packages/foolib # add other dirs here",
+    "serve-api": "node-dev dist/bin/daemon.js",
+    "serve": "concurrently -n packages,api-build,api-serve,web --kill-others-on-fail \"yarn packages --watch\" \"yarn build-api --watch\" \"yarn serve-api\" \"yarn web\"",
+    "check": "syncpack list-mismatches"
+  },
+  "workspaces": [
+    "webapp",
+    "daemon",
+    "packages/*"
+  ],
+  "devDependencies": {
+    "syncpack": "^5.6.10"
+  }
+}
