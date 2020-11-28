@@ -1,3 +1,3 @@
 export function timestamp(): string {
-  return new Date().toISOString() + 'D'
+  return new Date().toISOString()
 }

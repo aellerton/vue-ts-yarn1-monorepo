@@ -19,6 +19,9 @@ app.post('/api/hello', /* corsor for this endpoint only: cors(), */ (req: expres
     received: req.body, // NOTE: if this is blank, ensure the send provides header 'Content-type: application/json'
     origin: {
       hostname: req.hostname,
+      origin: req.headers['origin'] || '',
+      refer: req.headers['referer'] || '',
+      agent: req.headers['user-agent'] || '',
       ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress,
     }
   })
