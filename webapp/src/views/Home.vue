@@ -11,16 +11,29 @@
       </div>
       <div class="bordered col">
         <h3>Demo POST</h3>
-        <input v-model="name" type="text" placeholder="Name here" />
+        <input
+          v-model="name"
+          type="text"
+          placeholder="Name here"
+          @keyup.enter="callApi"
+        />
         <button @click="callApi">Post</button>
-        <pre v-if="response" style="text-align: left; overflow: scroll"
+        <pre
+          v-if="response"
+          style="text-align: left; overflow: scroll; font-size: 0.9em"
           >{{ response }} </pre
         >
       </div>
       <div class="bordered col">
         <h3>Demo Websocket</h3>
-        <input v-model="wsCmd" type="text" placeholder="e.g. 'now'" />
-        <button @click="sendWebsocket">Send</button>
+        <input
+          v-model="wsCmd"
+          type="text"
+          placeholder="e.g. 'now' or 'hello'"
+          @keyup.enter="sendWebSocket"
+        />
+        <button v-if="ws" @click="sendWebSocket">Send</button>
+        <button v-else @click="openWebSocket">Open</button>
         <div v-for="(item, i) in wsLog" :key="i" class="ws-log">
           <p>
             <span class="ts">{{ item.ts.toLocaleTimeString() }}</span>
@@ -36,10 +49,10 @@
   text-align: left;
   border-top: 1px solid #dddddd;
   margin-top: 1em;
-  font-size: 0.8em;
+  font-size: 0.9em;
 
   .ts {
-    font-size: 0.8em;
+    font-size: 0.9em;
     font-weight: bold;
   }
 }
@@ -101,24 +114,7 @@ export default class Home extends Vue {
   }
 
   created() {
-    // might be better to do this at the app level and @Provide it
-    if (!this.ws) {
-      let url = makeUrl(
-        "/chat",
-        location.protocol === "https:" ? "wss:" : "ws:"
-      )
-      this.ws = new WebSocket(url)
-      this.addLog(`WebSocket opening ${url}`)
-      this.ws.onopen = (event) => {
-        this.addLog("WebSocket opened")
-      }
-      this.ws.onmessage = (event) => {
-        this.addLog(`WebSocket received: ${event.data}`)
-      }
-      this.ws.onclose = (event) => {
-        this.addLog("WebSocket closed")
-      }
-    }
+    this.openWebSocket()
   }
 
   getLatest() {
@@ -146,7 +142,29 @@ export default class Home extends Vue {
     this.wsLog.unshift({ ts: new Date(), text })
   }
 
-  sendWebsocket() {
+  openWebSocket() {
+    // might be better to do this at the app level and @Provide it
+    if (!this.ws) {
+      let url = makeUrl(
+        "/chat",
+        location.protocol === "https:" ? "wss:" : "ws:"
+      )
+      this.ws = new WebSocket(url)
+      this.addLog(`WebSocket opening ${url}`)
+      this.ws.onopen = (event) => {
+        this.addLog("WebSocket opened")
+      }
+      this.ws.onmessage = (event) => {
+        this.addLog(`WebSocket received: ${event.data}`)
+      }
+      this.ws.onclose = (event) => {
+        this.addLog("WebSocket closed")
+        this.ws = null
+      }
+    }
+  }
+
+  sendWebSocket() {
     if (this.wsCmd && this.ws) {
       this.addLog(`Websocket send: ${this.wsCmd}`)
       this.ws.send(JSON.stringify({ text: this.wsCmd }))

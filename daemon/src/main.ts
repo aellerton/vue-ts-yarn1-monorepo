@@ -37,7 +37,7 @@ const httpServer = app.listen(port, () => {
 })
 
 // If you need another websocket handler on a different URL, just add another
-// one. Remember to handle the 'upgrade' below too.
+// ws.Server object - and remember to handle the 'upgrade' below.
 const wsServer = new ws.Server({ noServer: true, path: kWsDemoUri })
 
 wsServer.on('connection', (socket) => {
@@ -59,6 +59,8 @@ wsServer.on('connection', (socket) => {
       socket.send(JSON.stringify(data))
     } else if (data.text === 'now') {
       socket.send(`The time is ${data.timestamp}`)
+    } else if (data.text === 'hello' || data.text === 'hi') {
+      socket.send(`Greetings!`)
     } else {
       socket.send(JSON.stringify(data))
     }
