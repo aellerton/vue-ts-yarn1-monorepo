@@ -164,10 +164,11 @@ export default class Home extends Vue {
     }
   }
 
-  sendWebSocket() {
+  sendWebSocket(e) {
     if (this.wsCmd && this.ws) {
       this.addLog(`Websocket send: ${this.wsCmd}`)
       this.ws.send(JSON.stringify({ text: this.wsCmd }))
+      e.target?.select()
     }
   }
 }
