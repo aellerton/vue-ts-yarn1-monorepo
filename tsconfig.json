@@ -19,7 +19,7 @@
   ],
   "paths": {
     "@foolib/*": [
-      "packages/foolib/dist"
+      "libs/foolib/dist"
     ]
   }
 }

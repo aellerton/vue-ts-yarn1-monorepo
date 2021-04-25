@@ -19,9 +19,9 @@ Install all the dependencies:
 
     yarn install
 
-VSCode and maybe other IDEs seem to need an initial build of packages:
+VSCode and maybe other IDEs seem to need an initial build of libs:
 
-    yarn packages
+    yarn libs
     yarn build-api  # or maybe this; not sure
 
 ## Build and run
@@ -92,7 +92,7 @@ not without extra work) and the 'received' field above will be blank.
 
 In one terminal:
 
-    (cd packages/foolib && yarn build --watch)
+    (cd libs/foolib && yarn build --watch)
 
 In another terminal:
 

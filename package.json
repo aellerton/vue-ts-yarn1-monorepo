@@ -4,12 +4,11 @@
   "scripts": {
     "web": "yarn workspace webapp serve",
     "api": "concurrently --names build,serve --kill-others-on-fail \"yarn build-api --watch\" \"yarn serve-api\"",
-    "build": "tsc --build packages/* daemon webapp",
+    "build": "tsc --build libs/* daemon webapp",
     "libs": "tsc --build libs/*",
-    "packages": "tsc --build packages/*",
     "build-api": "yarn workspace daemon build",
     "serve-api": "node-dev dist/bin/daemon.js",
-    "serve": "concurrently -n packages,api-build,api-serve,web --kill-others-on-fail \"yarn packages --watch\" \"yarn build-api --watch\" \"yarn serve-api\" \"yarn web\"",
+    "serve": "concurrently -n libs,api-build,api-serve,web --kill-others-on-fail \"yarn libs --watch\" \"yarn build-api --watch\" \"yarn serve-api\" \"yarn web\"",
     "check": "syncpack list-mismatches",
     "clean": "rm -rf dist/*",
     "nuke": "yarn clean && rm -rf node_modules"
@@ -17,7 +16,7 @@
   "workspaces": [
     "webapp",
     "daemon",
-    "packages/*"
+    "libs/*"
   ],
   "devDependencies": {
     "syncpack": "^5.6.10"
