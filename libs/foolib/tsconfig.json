@@ -6,8 +6,7 @@
     "sourceMap": true,
     "composite": true,
     "outDir": "dist",
-    "rootDir": "src",
-    //"module": "commonjs"
+    "rootDir": "src"
   },
   "include": [
     "src/**/*.ts"

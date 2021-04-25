@@ -5,12 +5,12 @@
     "web": "yarn workspace webapp serve",
     "api": "concurrently --names build,serve --kill-others-on-fail \"yarn build-api --watch\" \"yarn serve-api\"",
     "build": "tsc --build libs/*",
-    "libs": "tsc --build libs/*",
+    "libs": "yarn workspace foolib build",
     "build-api": "yarn workspace daemon build",
     "serve-api": "node-dev dist/bin/daemon.js",
     "serve": "concurrently -n libs,api-build,api-serve,web --kill-others-on-fail \"yarn libs --watch\" \"yarn build-api --watch\" \"yarn serve-api\" \"yarn web\"",
     "check": "syncpack list-mismatches",
-    "clean": "rm -rf dist/* libs/*/dist/*",
+    "clean": "rm -rf dist/* libs/*/dist/* libs/*/tsconfig.tsbuildinfo",
     "nuke": "yarn clean && rm -rf node_modules"
   },
   "workspaces": [

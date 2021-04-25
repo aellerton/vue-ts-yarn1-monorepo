@@ -15,9 +15,9 @@
     "webpack-node-externals": "^2.5.2"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "tsc --build",
     "dist": "webpack",
-    "test": "mocha -r ts-node/register tests/**/*.spec.ts"
+    "test": "TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\"}' mocha -r ts-node/register tests/**/*.spec.ts"
   },
   "main": "dist/index.js",
   "types": "dist/index.d.ts"
