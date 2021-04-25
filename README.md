@@ -22,7 +22,7 @@ Install all the dependencies:
 VSCode and maybe other IDEs seem to need an initial build of packages:
 
     yarn packages
-
+    yarn build-api  # or maybe this; not sure
 
 ## Build and run
 

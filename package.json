@@ -4,6 +4,7 @@
   "scripts": {
     "web": "yarn workspace webapp serve",
     "api": "concurrently --names build,serve --kill-others-on-fail \"yarn build-api --watch\" \"yarn serve-api\"",
+    "build": "tsc --build packages/* daemon webapp",
     "libs": "tsc --build libs/*",
     "packages": "tsc --build packages/*",
     "build-api": "yarn workspace daemon build",
