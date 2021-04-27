@@ -8,6 +8,6 @@ describe('basic test', () => {
     })
     it('timestamp fully in the expected format', () => {
         const r = timestamp()
-        expect(r).to.match(/^\d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\d\.\d\d\dZ/)
+        expect(r).to.match(/^\d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\d\.\d\d\dZ$/)
     })
 })

@@ -1,5 +1,6 @@
 {
   "name": "foolib",
+  "license": "BSD-2-Clause",
   "version": "0.1.0",
   "dependencies": {},
   "devDependencies": {
@@ -17,8 +18,16 @@
   "scripts": {
     "build": "tsc --build",
     "dist": "webpack",
-    "test": "TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\"}' mocha -r ts-node/register tests/**/*.spec.ts"
+    "test": "TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\"}' mocha"
   },
   "main": "dist/index.js",
-  "types": "dist/index.d.ts"
+  "types": "dist/index.d.ts",
+  "mocha": {
+    "require": "ts-node/register",
+    "watch-files": [
+      "./src/**/*.ts",
+      "./tests/**/*.spec.ts"
+    ],
+    "spec": "./tests/**/*.spec.ts"
+  }
 }
