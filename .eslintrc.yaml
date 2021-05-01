@@ -1,0 +1,44 @@
+# Handy: https://gist.github.com/mast4461/c07417ee43f4a431ed2cec716819e044
+root: true
+env:
+  browser: true
+  node: true
+extends:
+  - 'eslint:recommended'
+  - 'plugin:@typescript-eslint/eslint-recommended'
+  - 'plugin:@typescript-eslint/recommended'
+parser: '@typescript-eslint/parser'
+parserOptions:
+  ecmaVersion: 2020
+plugins:
+  - '@typescript-eslint'
+rules:
+  '@typescript-eslint/no-unused-vars':
+  - warn
+  indent:
+  - error
+  - 2
+  linebreak-style:
+  - warn
+  - unix
+  ## override configuration set by extending "eslint:recommended"
+  # on-empty:
+  # - warn
+  no-cond-assign:
+  - error
+  - always
+  no-unused-vars:
+  - warn
+  - argsIgnorePattern: "^_"
+  semi:
+  - warn
+  - never
+  quotes:
+  - warn
+  - single
+overrides:
+  - files:
+      - "**/__tests__/*.{j,t}s?(x)"
+      - "**/tests/unit/**/*.spec.{j,t}s?(x)"
+    env:
+      mocha: true
