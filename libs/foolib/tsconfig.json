@@ -5,7 +5,7 @@
     "declarationMap": true,
     "sourceMap": true,
     "composite": true,
-    "outDir": "dist",
+    "outDir": "../../dist/foolib/lib",
     "rootDir": "src"
   },
   "include": [
