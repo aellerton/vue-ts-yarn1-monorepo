@@ -1,6 +1,7 @@
 {
   "name": "foolib",
   "license": "BSD-2-Clause",
+  "private": true,
   "version": "0.1.0",
   "dependencies": {},
   "devDependencies": {
@@ -9,6 +10,7 @@
     "@typescript-eslint/eslint-plugin": "^4.18.0",
     "@typescript-eslint/parser": "^4.18.0",
     "chai": "^4.1.2",
+    "cross-env": "^7.0.3",
     "eslint": "^6.7.2",
     "mocha": "^8.3.2",
     "ts-loader": "^9.1.1",
@@ -18,16 +20,24 @@
     "webpack-cli": "^4.2.0",
     "webpack-node-externals": "^2.5.2"
   },
+  "browser": {
+    "fs": false,
+    "path": false,
+    "os": false
+  },
   "scripts": {
     "build": "tsc --build",
     "dist": "webpack",
     "lint": "eslint src/**/* tests/**/*",
     "test": "TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\"}' mocha"
   },
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "src/index.ts",
+  "types": "../../dist/lowlib/lib/index.d.ts",
   "mocha": {
-    "require": "ts-node/register",
+    "require": [
+      "ts-node/register",
+      "tscofig-paths/register"
+    ],
     "watch-files": [
       "./src/**/*.ts",
       "./tests/**/*.spec.ts"
