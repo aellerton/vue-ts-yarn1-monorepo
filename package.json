@@ -2,20 +2,21 @@
   "private": true,
   "license": "BSD-2-Clause",
   "scripts": {
-    "web": "yarn workspace webapp serve",
     "api": "concurrently --names build,serve --kill-others-on-fail \"yarn build-api --watch\" \"yarn serve-api\"",
+    "app": "yarn workspace app",
+    "svc": "yarn workspace svc",
     "build": "tsc --build libs/*",
     "libs": "yarn workspace foolib build",
-    "build-api": "yarn workspace daemon build",
-    "serve-api": "node-dev dist/bin/daemon.js",
-    "serve": "concurrently -n libs,api-build,api-serve,web --kill-others-on-fail \"yarn libs --watch\" \"yarn build-api --watch\" \"yarn serve-api\" \"yarn web\"",
+    "build-api": "yarn workspace svc build",
+    "serve-api": "node-dev dist/bin/svc.js",
+    "serve": "concurrently -n svc,app --kill-others-on-fail 'yarn svc serve' 'yarn app serve'",
     "check": "syncpack list-mismatches",
-    "clean": "rm -rf dist/* libs/*/dist/* libs/*/tsconfig.tsbuildinfo",
-    "nuke": "yarn clean && rm -rf node_modules"
+    "clean": "rm -rf app/dist dist libs/*/dist libs/*/tsconfig.tsbuildinfo svc/dist yarn-error.log */yarn-error.log libs/*/yarn-error.log",
+    "nuke": "yarn clean && rm -rf app/node_modules libs/*/node_modules node_modules svc/node_modules"
   },
   "workspaces": [
-    "webapp",
-    "daemon",
+    "app",
+    "svc",
     "libs/*"
   ],
   "devDependencies": {

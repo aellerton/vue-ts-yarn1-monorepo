@@ -9,24 +9,43 @@ Includes:
   (Nothing wrong with Yarn 2.x or Lerna, just this doesn't use it)
 - Serve and live update on file changes
 
+
 ## First time
 
 These tools are optional but very useful to install globally:
 
-    yarn global add concurrently node-dev
+```
+yarn global add concurrently ts-node-dev
+```
 
-Install all the dependencies:
+Install dependencies:
 
-    yarn install
+```
+yarn install
+```
 
-VSCode and maybe other IDEs seem to need an initial build of libs:
-
-    yarn libs
-    yarn build-api  # or maybe this; not sure
 
 ## Build and run
 
-You can build the shared libs, the API Daemon and Vue webapp in one line:
+Build the libs (though not completely sure why this is necessary):
+
+```
+yarn libs
+```
+
+Run the service:
+
+```
+yarn svc serve
+```
+
+Serve the webapp:
+
+```
+yarn app serve
+```
+
+Or run server and app in one command:
 
 ```
 yarn serve
@@ -34,32 +53,15 @@ yarn serve
 
 You can then edit source, save, and everything should rebuild and adjust on-the-fly.
 
+
+# Experiment
+
 For example, add a suffix to the common library 'timestamp' function:
 
 ```
 export function timestamp(): string {
   return new Date().toISOString() + 'A' // <-- add the "A" just as a way to prove changes work rapidly
 }
-```
-
-You can build and serve _just the API_ in one line like this:
-
-```bash
-# either this in the root dir:
-yarn workspace daemon serve
-```
-
-or like this:
-
-```bash
-cd daemon && yarn serve
-```
-
-or, more explicitly:
-
-```bash
-cd daemon/
-yarn serve
 ```
 
 The API has a `GET` endpoint:
@@ -88,24 +90,6 @@ $ curl http://192.168.0.127:3001/api/hello -H 'Content-type: application/json' -
 Note that the "Content-type" is important, or the remote end won't receive the JSON (at least,
 not without extra work) and the 'received' field above will be blank.
 
-## Build and run parts separately
-
-In one terminal:
-
-    (cd libs/foolib && yarn build --watch)
-
-In another terminal:
-
-    (cd daemon && yarn build --watch)
-
-And another:
-
-    # you may need "yarn global add node-dev" for this:
-    node-dev dist/bin/daemon.js
-
-And in the last terminal:
-
-    (cd webapp && yarn serve)
 
 ## Adding and managing dependencies
 
@@ -132,6 +116,7 @@ can be avoided:
 Remember to check conflicts using 'syncpack':
 
     yarn check
+
 
 ## Reading
 

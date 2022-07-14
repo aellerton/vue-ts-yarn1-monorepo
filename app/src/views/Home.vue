@@ -1,7 +1,7 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png"/>
-    <HelloWorld :msg="initial"/>
+    <img alt="Vue logo" src="../assets/logo.png" />
+    <HelloWorld :msg="initial" />
     <div class="flex-grid-thirds">
       <div class="bordered col">
         <h3>Demo GET</h3>
@@ -12,26 +12,22 @@
       <div class="bordered col">
         <h3>Demo POST</h3>
         <input
-            v-model="name"
-            type="text"
-            placeholder="Name here"
-            @keyup.enter="callApi"
-        />
+          v-model="name"
+          type="text"
+          placeholder="Name here"
+          @keyup.enter="callApi" />
         <button @click="callApi">Post</button>
         <pre
-            v-if="response"
-            style="text-align: left; overflow: scroll; font-size: 0.9em"
-        >{{ response }} </pre
-        >
+          v-if="response"
+          style="text-align: left; overflow: scroll; font-size: 0.9em">{{ response }} </pre>
       </div>
       <div class="bordered col">
         <h3>Demo Websocket</h3>
         <input
-            v-model="wsCmd"
-            type="text"
-            placeholder="e.g. 'now' or 'hello'"
-            @keyup.enter="sendWebSocket"
-        />
+          v-model="wsCmd"
+          type="text"
+          placeholder="e.g. 'now' or 'hello'"
+          @keyup.enter="sendWebSocket" />
         <button v-if="ws" @click="sendWebSocket">Send</button>
         <button v-else @click="openWebSocket">Open</button>
         <div v-for="(item, i) in wsLog" :key="i" class="ws-log">
@@ -58,9 +54,9 @@
 }
 </style>
 <script lang="ts">
-import {Component, Vue} from "vue-property-decorator"
+import { Component, Vue } from "vue-property-decorator"
 import HelloWorld from "@/components/HelloWorld.vue" // @ is an alias to /src
-import {timestamp} from "foolib"
+import { timestamp } from "foolib"
 
 function makeUrl(uri: string, protocol?: string) {
   protocol = protocol || location.protocol
@@ -90,7 +86,7 @@ export default class Home extends Vue {
   wsLog: WsLogItem[] = []
 
   callApi() {
-    let data = {name: this.name || "Unnamed"}
+    let data = { name: this.name || "Unnamed" }
     fetch(makeUrl(`/api/hello`), {
       method: "POST",
       mode: "cors",
@@ -100,17 +96,17 @@ export default class Home extends Vue {
       },
       body: JSON.stringify(data)
     })
-        .then((r) => {
-          return r.json()
-        })
-        .then((data) => {
-          this.response = data
-        })
-        .catch((err) => {
-          this.response = {
-            err
-          }
-        })
+      .then((r) => {
+        return r.json()
+      })
+      .then((data) => {
+        this.response = data
+      })
+      .catch((err) => {
+        this.response = {
+          err
+        }
+      })
   }
 
   created() {
@@ -127,27 +123,27 @@ export default class Home extends Vue {
       // }).then(r => {
       //   return r.json()
     })
-        .then((response) => {
-          return response.text()
-        })
-        .then((text) => {
-          this.latest = text
-        })
-        .catch((err) => {
-          this.latest = `Failed: ${err}`
-        })
+      .then((response) => {
+        return response.text()
+      })
+      .then((text) => {
+        this.latest = text
+      })
+      .catch((err) => {
+        this.latest = `Failed: ${err}`
+      })
   }
 
   addLog(text: string) {
-    this.wsLog.unshift({ts: new Date(), text})
+    this.wsLog.unshift({ ts: new Date(), text })
   }
 
   openWebSocket() {
     // might be better to do this at the app level and @Provide it
     if (!this.ws) {
       let url = makeUrl(
-          "/chat",
-          location.protocol === "https:" ? "wss:" : "ws:"
+        "/chat",
+        location.protocol === "https:" ? "wss:" : "ws:"
       )
       this.ws = new WebSocket(url)
       this.addLog(`WebSocket opening ${url}`)
@@ -167,7 +163,7 @@ export default class Home extends Vue {
   sendWebSocket(e: KeyboardEvent & { target: HTMLInputElement }) {
     if (this.wsCmd && this.ws) {
       this.addLog(`Websocket send: ${this.wsCmd}`)
-      this.ws.send(JSON.stringify({text: this.wsCmd}))
+      this.ws.send(JSON.stringify({ text: this.wsCmd }))
       e.target?.select()
     }
   }
