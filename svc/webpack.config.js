@@ -4,7 +4,7 @@ let nodeExternals = require('webpack-node-externals')
 let config = {
   // Note that the mode (production/development) is provided via CLI args
   entry: {
-    'daemon': './src/main.ts' // path.join(__dirname, 'src', 'main.ts')
+    'svc': './src/main.ts' // path.join(__dirname, 'src', 'main.ts')
   },
   target: 'node',
   output: {

@@ -1,11 +1,12 @@
 {
-  "name": "daemon",
+  "name": "svc",
   "version": "0.1.0",
   "license": "BSD-2-Clause",
+  "private": true,
   "scripts": {
     "build": "webpack --mode development",
     "dist": "webpack --mode production",
-    "serve": "concurrently --names build,serve --kill-others-on-fail \"yarn build --watch\" \"node-dev ../dist/bin/daemon.js\""
+    "serve": "cross-env TS_NODE_FILES=true TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\"}' ts-node-dev -r tsconfig-paths/register src/main.ts"
   },
   "dependencies": {
     "cors": "^2.8.5",
@@ -17,8 +18,21 @@
     "@types/cors": "^2.8.8",
     "@types/express": "^4.17.9",
     "@types/ws": "^7.4.0",
+    "cross-env": "^7.0.3",
+    "tsconfig-paths": "^4.0.0",
     "webpack": "^5.8.0",
     "webpack-cli": "^4.2.0",
     "webpack-node-externals": "^2.5.2"
+  },
+  "mocha": {
+    "require": [
+      "ts-node/register",
+      "tscofig-paths/register"
+    ],
+    "watch-files": [
+      "./src/**/*.ts",
+      "./tests/**/*.spec.ts"
+    ],
+    "spec": "./tests/**/*.spec.ts"
   }
 }
