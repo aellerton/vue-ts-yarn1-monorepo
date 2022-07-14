@@ -6,10 +6,11 @@
     "app": "yarn workspace app",
     "svc": "yarn workspace svc",
     "build": "tsc --build libs/*",
+    "dist": "yarn app dist && yarn svc dist && ls -l dist",
     "libs": "yarn workspace foolib build",
     "build-api": "yarn workspace svc build",
     "serve-api": "node-dev dist/bin/svc.js",
-    "serve": "concurrently -n svc,app --kill-others-on-fail 'yarn svc serve' 'yarn app serve'",
+    "serve": "concurrently -n svc,app --kill-others-on-fail \"yarn svc serve\" \"yarn app serve\"",
     "check": "syncpack list-mismatches",
     "clean": "rm -rf app/dist dist libs/*/dist libs/*/tsconfig.tsbuildinfo svc/dist yarn-error.log */yarn-error.log libs/*/yarn-error.log",
     "nuke": "yarn clean && rm -rf app/node_modules libs/*/node_modules node_modules svc/node_modules"
@@ -20,6 +21,7 @@
     "libs/*"
   ],
   "devDependencies": {
+    "concurrently": "=7.2.2",
     "syncpack": "^5.6.10"
   }
 }

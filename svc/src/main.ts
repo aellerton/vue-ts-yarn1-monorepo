@@ -1,6 +1,7 @@
 import express, { NextFunction } from 'express'
-import cors from 'cors'
 import ws, { Server } from 'ws'
+
+import cors from 'cors'
 import { timestamp } from 'foolib'
 
 const app = express()
@@ -49,7 +50,7 @@ wsServer.on('connection', (socket) => {
       try {
         data = JSON.parse(msg)
       } catch (err) {
-        data = { error: err.reason }
+        data = { error: 'Failed to parse' }
       }
     } else {
       data = { text: msg }

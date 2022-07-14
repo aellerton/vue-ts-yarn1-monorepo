@@ -10,48 +10,37 @@ Includes:
 - Serve and live update on file changes
 
 
-## First time
-
-These tools are optional but very useful to install globally:
-
-```
-yarn global add concurrently ts-node-dev
-```
+## Build and run
 
 Install dependencies:
 
-```
-yarn install
-```
-
-
-## Build and run
+    yarn install
 
 Build the libs (though not completely sure why this is necessary):
 
-```
-yarn libs
-```
+    yarn libs
 
 Run the service:
 
-```
-yarn svc serve
-```
+    yarn svc serve
 
 Serve the webapp:
 
-```
-yarn app serve
-```
+    yarn app serve
 
 Or run server and app in one command:
 
-```
-yarn serve
-```
+    yarn serve
 
 You can then edit source, save, and everything should rebuild and adjust on-the-fly.
+
+
+## Build for production
+
+All builds go to the dist folder.
+
+    yarn svc dist
+    yarn app dist
 
 
 # Experiment
