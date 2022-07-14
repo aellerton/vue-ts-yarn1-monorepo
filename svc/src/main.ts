@@ -62,6 +62,8 @@ wsServer.on('connection', (socket) => {
       socket.send(`The time is ${data.timestamp}`)
     } else if (data.text === 'hello' || data.text === 'hi') {
       socket.send(`Greetings!`)
+    } else if (data.text === 'boo') {
+      socket.send(`yah!`)
     } else {
       socket.send(JSON.stringify(data))
     }
