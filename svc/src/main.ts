@@ -1,7 +1,7 @@
-import { makeServer } from './app'
+import { makeServer, upgradeServer } from './app'
 
 const port = 3001
-const { app, upgradeWs } = makeServer()
-const httpServer = app.listen(port, () => {
-  console.log(`Daemon listening on port ${port}`)
-}).on('upgrade', upgradeWs)
+const app = makeServer()
+const httpServer = upgradeServer(app.listen(port, () => {
+  console.log(`Service ready on port ${port}`)
+}))

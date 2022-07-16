@@ -1,7 +1,7 @@
-import express, { Express, NextFunction } from 'express'
-import { IncomingMessage } from 'http'
+import express, { Express } from 'express'
+import { IncomingMessage, Server as HttpServer } from 'http'
 import { Socket } from 'net'
-import ws, { Server } from 'ws'
+import ws from 'ws'
 import cors from 'cors'
 import { timestamp } from 'foolib'
 
@@ -9,7 +9,7 @@ const WS_PATH = '/chat'
 
 type UpgradeHandler = (request: IncomingMessage, socket: Socket, upgradeHead: Buffer, callback: (client: WebSocket, request: IncomingMessage) => void) => void
 
-export function makeServer(port: number = 3001): { app: Express, upgradeWs: UpgradeHandler } {
+export function makeServer(port: number = 3001): Express {
   const app = express()
 
   app.use(express.json())
@@ -29,14 +29,17 @@ export function makeServer(port: number = 3001): { app: Express, upgradeWs: Upgr
       received: req.body, // NOTE: if this is blank, ensure the send provides header 'Content-type: application/json'
       origin: {
         hostname: req.hostname,
-        origin: req.headers['origin'] || '',
-        refer: req.headers['referer'] || '',
-        agent: req.headers['user-agent'] || '',
-        ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress,
+        origin: req.headers['origin'] ?? '',
+        refer: req.headers['referer'] ?? '',
+        agent: req.headers['user-agent'] ?? '',
+        ip: req.headers['x-forwarded-for'] ?? req.socket.remoteAddress,
       }
     })
   })
+  return app
+}
 
+export function upgradeServer(server: HttpServer): HttpServer { 
   // If you need another websocket handler on a different URL, just add another
   // ws.Server object - and remember to handle the 'upgrade' below.
   const wsServer = new ws.Server({ noServer: true, path: WS_PATH })
@@ -77,5 +80,7 @@ export function makeServer(port: number = 3001): { app: Express, upgradeWs: Upgr
       })
     }
   }
-  return { app, upgradeWs }
+
+  server.on('upgrade', upgradeWs)
+  return server
 }
