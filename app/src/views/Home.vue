@@ -81,7 +81,7 @@ export default class Home extends Vue {
   latest: string = ""
   name: string = ""
   response: object | null = null
-  private ws: WebSocket | null = null // private because don't want that to be change-monitored by Vue
+  ws: WebSocket | null = null // private because don't want that to be change-monitored by Vue
   wsCmd: string = ""
   wsLog: WsLogItem[] = []
 
