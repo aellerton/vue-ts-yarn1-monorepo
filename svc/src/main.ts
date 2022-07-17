@@ -1,4 +1,4 @@
-import { makeServer, upgradeServer } from './app'
+import {makeServer, upgradeServer} from './app'
 
 const port = 3001
 const app = makeServer()

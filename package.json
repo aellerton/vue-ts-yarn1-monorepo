@@ -4,6 +4,7 @@
   "scripts": {
     "api": "concurrently --names build,serve --kill-others-on-fail \"yarn build-api --watch\" \"yarn serve-api\"",
     "app": "yarn workspace app",
+    "foolib": "yarn workspace foolib",
     "svc": "yarn workspace svc",
     "build": "tsc --build libs/*",
     "dist": "yarn app dist && yarn svc dist && ls -l dist",

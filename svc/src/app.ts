@@ -1,9 +1,9 @@
-import express, { Express } from 'express'
-import { IncomingMessage, Server as HttpServer } from 'http'
-import { Socket } from 'net'
-import ws, { WebSocket } from 'ws'
+import express, {Express} from 'express'
+import {IncomingMessage, Server as HttpServer} from 'http'
+import {Socket} from 'net'
+import ws, {WebSocket} from 'ws'
 import cors from 'cors'
-import { timestamp } from 'foolib'
+import {timestamp} from 'foolib'
 
 const WS_PATH = '/chat'
 
@@ -32,7 +32,7 @@ export function makeServer(port: number = 3001): Express {
         origin: req.headers['origin'] ?? '',
         refer: req.headers['referer'] ?? '',
         agent: req.headers['user-agent'] ?? '',
-        ip: req.headers['x-forwarded-for'] ?? req.socket.remoteAddress,
+        ip: req.headers['x-forwarded-for'] ?? req.socket.remoteAddress
       }
     })
   })
@@ -44,15 +44,15 @@ export function makeSocketHandler(socket: WebSocket, request: IncomingMessage): 
   socket.on('message', (msg: string) => {
     let data: any = {}
     if (!msg) {
-      data = { error: 'blank' }
+      data = {error: 'blank'}
     } else if (msg.startsWith('{')) {
       try {
         data = JSON.parse(msg)
       } catch (err) {
-        data = { error: 'Failed to parse' }
+        data = {error: 'Failed to parse'}
       }
     } else {
-      data = { text: msg }
+      data = {text: msg}
     }
     data.timestamp = timestamp()
     if (data.error) {
@@ -69,10 +69,10 @@ export function makeSocketHandler(socket: WebSocket, request: IncomingMessage): 
   })
 }
 
-export function upgradeServer(server: HttpServer): HttpServer { 
+export function upgradeServer(server: HttpServer): HttpServer {
   // If you need another websocket handler on a different URL, just add another
   // ws.Server object - and remember to handle the 'upgrade' below.
-  const wsServer = new ws.Server({ noServer: true, path: WS_PATH })
+  const wsServer = new ws.Server({noServer: true, path: WS_PATH})
 
   wsServer.on('connection', makeSocketHandler)
 

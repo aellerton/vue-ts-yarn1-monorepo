@@ -1,5 +1,5 @@
-import { expect } from 'chai'
-import { timestamp } from '../../src'
+import {expect} from 'chai'
+import {timestamp} from '../../src'
 
 describe('basic test', () => {
   it('timestamp date in the expected format', () => {
