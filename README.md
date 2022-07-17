@@ -30,7 +30,7 @@ Serve the webapp:
 
 Or run server and app in one command:
 
-    yarn serve
+    yarn serve  # WARNING: may not work reliably
 
 You can then edit source, save, and everything should rebuild and adjust on-the-fly.
 
@@ -41,6 +41,24 @@ All builds go to the dist folder.
 
     yarn svc dist
     yarn app dist
+
+
+# Test
+
+You can test an _individual part of the repo_ in several ways.
+
+The shortest way:
+
+    yarn svc test  
+
+This is the same but shorter than:
+
+    yarn workspace svc test
+
+Or if you prefer:
+
+    cd svc
+    yarn test
 
 
 # Experiment
@@ -82,25 +100,25 @@ not without extra work) and the 'received' field above will be blank.
 
 ## Adding and managing dependencies
 
-To add a package to all workspces:
+To add a package to all workspaces:
 
     # In the root dir of this repo...
     # The "-W" is the important bit:
     yarn add package-name-here -W
 
-To add a package to a specific workspace (e.g. the 'daemon' area):
+To add a package to a specific workspace, e.g. to the service:
 
-    yarn workspace daemon add package-name-here
+    yarn workspace svc add package-name-here
 
 The same operation, but a 'dev' package:
 
-    yarn workspace daemon add package-name-here --dev # or '-D'
+    yarn workspace daemon add package-name-here -D  # or --dev
 
-Update the 'daemon' local module to use the 'foolib' local module - note that
-the specific version seems to e a requirement, which is weird. Not sure if it
-can be avoided:
+x Update the 'daemon' local module to use the 'foolib' local module - note that
+x the specific version seems to e a requirement, which is weird. Not sure if it
+x can be avoided:
 
-    yarn workspace daemon add foolib@0.1.0
+    NEED? $ yarn workspace daemon add foolib@0.1.0
 
 Remember to check conflicts using 'syncpack':
 

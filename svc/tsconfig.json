@@ -1,5 +1,14 @@
 {
   "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "declaration": true,
+    "declarationMap": true,
+    "esModuleInterop": true,
+    "sourceMap": true,
+//    "composite": true,
+    "outDir": "../../dist/svc/dist",
+//    "rootDir": "src"
+  },
   "include": [
     "src/**/*.ts"
   ],
@@ -7,6 +16,8 @@
     "node_modules"
   ],
   "references": [
-    {"path": "../libs/foolib"}
+    {
+      "path": "../libs/foolib"
+    }
   ]
 }

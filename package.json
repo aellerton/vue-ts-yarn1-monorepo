@@ -1,20 +1,22 @@
 {
-  "private": true,
+  "name": "vuemono-yarn1",
+  "version": "1.0.0",
   "license": "BSD-2-Clause",
+  "private": true,
   "scripts": {
     "api": "concurrently --names build,serve --kill-others-on-fail \"yarn build-api --watch\" \"yarn serve-api\"",
     "app": "yarn workspace app",
-    "foolib": "yarn workspace foolib",
-    "svc": "yarn workspace svc",
     "build": "tsc --build libs/*",
-    "dist": "yarn app dist && yarn svc dist && ls -l dist",
-    "libs": "yarn workspace foolib build",
     "build-api": "yarn workspace svc build",
-    "serve-api": "node-dev dist/bin/svc.js",
-    "serve": "concurrently -n svc,app --kill-others-on-fail \"yarn svc serve\" \"yarn app serve\"",
     "check": "syncpack list-mismatches",
     "clean": "rm -rf app/dist dist libs/*/dist libs/*/tsconfig.tsbuildinfo svc/dist yarn-error.log */yarn-error.log libs/*/yarn-error.log",
-    "nuke": "yarn clean && rm -rf app/node_modules libs/*/node_modules node_modules svc/node_modules"
+    "dist": "yarn app dist && yarn svc dist && ls -l dist",
+    "foolib": "yarn workspace foolib",
+    "libs": "yarn workspace foolib build",
+    "nuke": "yarn clean && rm -rf app/node_modules libs/*/node_modules node_modules svc/node_modules",
+    "serve": "echo \\'WARNING - this seems not reliable\\' && concurrently -n svc,app --kill-others-on-fail \"yarn svc serve\" \"yarn app serve\"",
+    "serve-api": "node-dev dist/bin/svc.js",
+    "svc": "yarn workspace svc"
   },
   "workspaces": [
     "app",

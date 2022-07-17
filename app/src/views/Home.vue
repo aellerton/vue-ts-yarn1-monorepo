@@ -148,7 +148,8 @@ export default class Home extends Vue {
   sendWebSocket(e: KeyboardEvent & { target: HTMLInputElement }) {
     if (this.wsCmd && this.ws) {
       this.addLog(`Websocket send: ${this.wsCmd}`)
-      this.ws.send(JSON.stringify({text: this.wsCmd}))
+      this.ws.send(this.wsCmd)
+      // this.ws.send(JSON.stringify({text: this.wsCmd}))
       e.target?.select()
     }
   }

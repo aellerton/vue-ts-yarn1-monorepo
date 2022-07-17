@@ -1,25 +1,25 @@
 {
   "compilerOptions": {
-    "target": "esnext",
-    "module": "esnext",
-    "strict": true,
-    "jsx": "preserve",
-    "importHelpers": true,
-    "moduleResolution": "node",
-    "experimentalDecorators": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "jsx": "preserve",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "skipLibCheck": true,
     "sourceMap": true,
-    "baseUrl": "."
+    "strict": true,
+    "target": "esnext"
   },
   "baseUrl": ".",
   "exclude": [
     "node_modules"
   ],
   "paths": {
-    "@foolib/*": [
-      "libs/foolib/dist"
-    ]
+//    "@foolib/*": [
+//      "libs/foolib/dist"
+//    ]
   }
 }
