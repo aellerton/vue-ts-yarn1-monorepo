@@ -14,7 +14,7 @@
     "foolib": "yarn workspace foolib",
     "libs": "yarn workspace foolib build",
     "nuke": "yarn clean && rm -rf app/node_modules libs/*/node_modules node_modules svc/node_modules",
-    "serve": "echo \\'WARNING - this seems not reliable\\' && concurrently -n svc,app --kill-others-on-fail \"yarn svc serve\" \"yarn app serve\"",
+    "serve": "concurrently -n svc,app --kill-others-on-fail \"yarn svc serve\" \"yarn app serve\"",
     "serve-api": "node-dev dist/bin/svc.js",
     "svc": "yarn workspace svc"
   },

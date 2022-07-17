@@ -30,7 +30,7 @@ Serve the webapp:
 
 Or run server and app in one command:
 
-    yarn serve  # WARNING: may not work reliably
+    yarn serve
 
 You can then edit source, save, and everything should rebuild and adjust on-the-fly.
 
