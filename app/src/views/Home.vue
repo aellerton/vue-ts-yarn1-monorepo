@@ -65,14 +65,14 @@ export default class Home extends Vue {
   initial = `Library function result: ${timestamp()}` // prove calling the library function in the web app
   latest = ''
   name = ''
-  response: object | null = null
+  response: Record<string, unknown> | null = null
   ws: WebSocket | null = null // private because don't want that to be change-monitored by Vue
   wsCmd = ''
   wsLog: WsLogItem[] = []
 
-  callApi() {
+  callApi(): void {
     let data = {name: this.name || 'Unnamed'}
-    fetch(makeUrl(`/api/hello`), {
+    fetch(makeUrl('/api/hello'), {
       method: 'POST',
       mode: 'cors',
       cache: 'no-cache',
@@ -80,26 +80,25 @@ export default class Home extends Vue {
         'Content-type': 'application/json'
       },
       body: JSON.stringify(data)
-    })
-    .then((r) => {
+    }).then(r => {
       return r.json()
     })
-    .then((data) => {
-      this.response = data
-    })
-    .catch((err) => {
-      this.response = {
-        err
-      }
-    })
+      .then(data => {
+        this.response = data
+      })
+      .catch(err => {
+        this.response = {
+          err
+        }
+      })
   }
 
-  created() {
+  created(): void {
     this.openWebSocket()
   }
 
-  getLatest() {
-    fetch(makeUrl(`/`), {
+  getLatest(): void {
+    fetch(makeUrl('/'), {
       mode: 'cors',
       cache: 'no-cache',
       headers: {
@@ -108,44 +107,44 @@ export default class Home extends Vue {
       // }).then(r => {
       //   return r.json()
     })
-    .then((response) => {
-      return response.text()
-    })
-    .then((text) => {
-      this.latest = text
-    })
-    .catch((err) => {
-      this.latest = `Failed: ${err}`
-    })
+      .then(response => {
+        return response.text()
+      })
+      .then((text) => {
+        this.latest = text
+      })
+      .catch((err) => {
+        this.latest = `Failed: ${err}`
+      })
   }
 
-  addLog(text: string) {
+  addLog(text: string): void {
     this.wsLog.unshift({ts: new Date(), text})
   }
 
-  openWebSocket() {
+  openWebSocket(): void {
     // might be better to do this at the app level and @Provide it
     if (!this.ws) {
       let url = makeUrl(
-          '/chat',
-          location.protocol === 'https:' ? 'wss:' : 'ws:'
+        '/chat',
+        location.protocol === 'https:' ? 'wss:' : 'ws:'
       )
       this.ws = new WebSocket(url)
       this.addLog(`WebSocket opening ${url}`)
-      this.ws.onopen = (event) => {
+      this.ws.onopen = (_event) => {
         this.addLog('WebSocket opened')
       }
       this.ws.onmessage = (event) => {
         this.addLog(`WebSocket received: ${event.data}`)
       }
-      this.ws.onclose = (event) => {
+      this.ws.onclose = (_event) => {
         this.addLog('WebSocket closed')
         this.ws = null
       }
     }
   }
 
-  sendWebSocket(e: KeyboardEvent & { target: HTMLInputElement }) {
+  sendWebSocket(e: KeyboardEvent & { target: HTMLInputElement }): void {
     if (this.wsCmd && this.ws) {
       this.addLog(`Websocket send: ${this.wsCmd}`)
       this.ws.send(this.wsCmd)

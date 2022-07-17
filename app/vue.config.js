@@ -1,10 +1,11 @@
+/* eslint @typescript-eslint/no-var-requires: "off" */
 const path = require('path')
 
 module.exports = {
   /*
   paths: {
     index: {
-      etnry: 'src/pages/root/main.ts'
+      entry: 'src/pages/root/main.ts'
     },
     foo: {
       entry: 'src/pages/foo/main.ts',
@@ -12,5 +13,7 @@ module.exports = {
     }
   }
   */
- outputDir: path.join(__dirname, '..', 'dist', 'app')
+  outputDir: path.join(__dirname, '..', 'dist', 'app'),
+
+  lintOnSave: false
 }

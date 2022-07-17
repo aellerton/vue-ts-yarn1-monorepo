@@ -13,8 +13,11 @@ parserOptions:
 plugins:
   - '@typescript-eslint'
 rules:
-  '@typescript-eslint/no-unused-vars':
+  "@typescript-eslint/no-unused-vars":
   - warn
+  - argsIgnorePattern: "^_"
+    varsIgnorePattern: "^_"
+    caughtErrorsIgnorePattern: "^_"
   indent:
   - error
   - 2
@@ -27,9 +30,8 @@ rules:
   no-cond-assign:
   - error
   - always
-  no-unused-vars:
-  - warn
-  - argsIgnorePattern: "^_"
+  no-unused-vars: # disabled but see typescript-eslint/no-unused-vars
+  - off
   semi:
   - warn
   - never

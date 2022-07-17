@@ -7,6 +7,7 @@
     "build": "webpack --mode development",
     "clean": "rm -rf ../dist/bin/svc.*",
     "dist": "webpack --mode production",
+    "lint": "eslint src/**/* tests/**/*",
     "serve": "cross-env TS_NODE_FILES=true TS_NODE_COMPILER_OPTIONS={\\\"module\\\":\\\"commonjs\\\"} ts-node-dev -r tsconfig-paths/register src/main.ts",
     "test": "cross-env TS_NODE_COMPILER_OPTIONS={\\\"module\\\":\\\"commonjs\\\"} mocha"
   },

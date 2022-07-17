@@ -20,11 +20,9 @@ describe('service endpoints', () => {
   })
 
   describe('timestamp endpoint', () => {
-    it('GET timestamp', () => {
-      return chai.request(app).get('/')
-      .then(res => {
-        chai.expect(res.text).to.match(new RegExp('TypeScript at ' + timestampPattern))
-      })
+    it('GET timestamp', async () => {
+      const res = await chai.request(app).get('/')
+      chai.expect(res.text).to.match(new RegExp('TypeScript at ' + timestampPattern))
     })
   })
 

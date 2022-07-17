@@ -7,9 +7,7 @@ import {timestamp} from 'foolib'
 
 const WS_PATH = '/chat'
 
-type UpgradeHandler = (request: IncomingMessage, socket: Socket, upgradeHead: Buffer, callback: (client: WebSocket, request: IncomingMessage) => void) => void
-
-export function makeServer(port: number = 3001): Express {
+export function makeServer(): Express {
   const app = express()
 
   app.use(express.json())
@@ -23,7 +21,7 @@ export function makeServer(port: number = 3001): Express {
   })
 
   app.post('/api/hello', (req: express.Request, res: express.Response) => {
-    let now = new Date()
+    const now = new Date()
     res.json({
       ts: now,
       received: req.body, // NOTE: if this is blank, ensure the send provides header 'Content-type: application/json'
@@ -40,7 +38,7 @@ export function makeServer(port: number = 3001): Express {
 }
 
 export function processJsonInput(msg: string, ts: string): string {
-  let parsed: Record<string, any>
+  let parsed: Record<string, unknown>
   try {
     parsed = JSON.parse(msg)
   } catch (err) {
@@ -69,7 +67,7 @@ export function processTextInput(msg: string, ts: string): string {
 }
 
 // (this: Server, socket: WebSocket, request: http.IncomingMessage) => void
-export function makeSocketHandler(socket: WebSocket, request: IncomingMessage): void {
+export function makeSocketHandler(socket: WebSocket, _request: IncomingMessage): void {
   socket.on('message', (data: RawData, isBinary: boolean) => {
     function fail(error: string) {
       socket.send(JSON.stringify({error}))

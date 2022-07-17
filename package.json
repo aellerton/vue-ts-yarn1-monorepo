@@ -13,6 +13,7 @@
     "dist": "yarn app dist && yarn svc dist && ls -l dist",
     "foolib": "yarn workspace foolib",
     "libs": "yarn workspace foolib build",
+    "lint": "yarn foolib lint && yarn svc lint && yarn app lint",
     "nuke": "yarn clean && rm -rf app/node_modules libs/*/node_modules node_modules svc/node_modules",
     "serve": "concurrently -n svc,app --kill-others-on-fail \"yarn svc serve\" \"yarn app serve\"",
     "serve-api": "node-dev dist/bin/svc.js",
