@@ -1,7 +1,7 @@
 import express, { Express } from 'express'
 import { IncomingMessage, Server as HttpServer } from 'http'
 import { Socket } from 'net'
-import ws from 'ws'
+import ws, { WebSocket } from 'ws'
 import cors from 'cors'
 import { timestamp } from 'foolib'
 
@@ -39,39 +39,42 @@ export function makeServer(port: number = 3001): Express {
   return app
 }
 
+// (this: Server, socket: WebSocket, request: http.IncomingMessage) => void
+export function makeSocketHandler(socket: WebSocket, request: IncomingMessage): void {
+  socket.on('message', (msg: string) => {
+    let data: any = {}
+    if (!msg) {
+      data = { error: 'blank' }
+    } else if (msg.startsWith('{')) {
+      try {
+        data = JSON.parse(msg)
+      } catch (err) {
+        data = { error: 'Failed to parse' }
+      }
+    } else {
+      data = { text: msg }
+    }
+    data.timestamp = timestamp()
+    if (data.error) {
+      socket.send(JSON.stringify(data))
+    } else if (data.text === 'now') {
+      socket.send(`The time is ${data.timestamp}`)
+    } else if (data.text === 'hello' || data.text === 'hi') {
+      socket.send(`Greetings!`)
+    } else if (data.text === 'boo') {
+      socket.send(`yah!`)
+    } else {
+      socket.send(JSON.stringify(data))
+    }
+  })
+}
+
 export function upgradeServer(server: HttpServer): HttpServer { 
   // If you need another websocket handler on a different URL, just add another
   // ws.Server object - and remember to handle the 'upgrade' below.
   const wsServer = new ws.Server({ noServer: true, path: WS_PATH })
 
-  wsServer.on('connection', (socket) => {
-    socket.on('message', (msg: string) => {
-      let data: any = {}
-      if (!msg) {
-        data = { error: 'blank' }
-      } else if (msg.startsWith('{')) {
-        try {
-          data = JSON.parse(msg)
-        } catch (err) {
-          data = { error: 'Failed to parse' }
-        }
-      } else {
-        data = { text: msg }
-      }
-      data.timestamp = timestamp()
-      if (data.error) {
-        socket.send(JSON.stringify(data))
-      } else if (data.text === 'now') {
-        socket.send(`The time is ${data.timestamp}`)
-      } else if (data.text === 'hello' || data.text === 'hi') {
-        socket.send(`Greetings!`)
-      } else if (data.text === 'boo') {
-        socket.send(`yah!`)
-      } else {
-        socket.send(JSON.stringify(data))
-      }
-    })
-  })
+  wsServer.on('connection', makeSocketHandler)
 
   const upgradeWs = (request: IncomingMessage, socket: Socket, head: Buffer) => {
     if (request.url === WS_PATH) {
